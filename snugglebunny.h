@@ -1,6 +1,6 @@
-#define KILO_VERSION "0.0.1"
-#define KILO_TAB_STOP 8
-#define KILO_QUIT_TIMES 3
+#define SNUGGLEBUNNY_VERSION "0.0.1"
+#define SNUGGLEBUNNY_TAB_STOP 8
+#define SNUGGLEBUNNY_QUIT_TIMES 3
 
 #define DEFAULT_STATUS "hello snuggle bunny <3<3<3"
 
