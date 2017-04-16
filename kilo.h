@@ -1,9 +1,17 @@
 #define KILO_VERSION "0.0.1"
 #define KILO_TAB_STOP 8
+#define KILO_QUIT_TIMES 3
+
+#define DEFAULT_STATUS "hello snuggle bunny <3<3<3"
 
 #define E_ERROR 1
 #define CTRL_KEY(k) ((k) & 0x1f)
 
+
+/* prototypes */
+void editorSetStatusMessage(const char *fmt, ...);
+void editorRefreshScreen();
+char *editorPrompt(char *prompt);
 
 /*
    Represent a row of stuff
@@ -27,6 +35,7 @@ struct editorConfig {
   int screenrows;
   int numrows;
   erow *row;
+  int dirty;
   char *filename;
   char statusmsg[80];
   time_t statusmsg_time;
@@ -65,6 +74,7 @@ struct abuf {
   Do some arrow key stuff I guess I dunno
  */
 enum editorKey {
+  BACKSPACE = 127,
   ARROW_LEFT = 1000,
   ARROW_RIGHT,
   ARROW_UP,
