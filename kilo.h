@@ -1,3 +1,5 @@
+#define KILO_VERSION "0.0.1"
+
 #define E_ERROR 1
 #define CTRL_KEY(k) ((k) & 0x1f)
 
@@ -5,6 +7,7 @@
   Hold some editor state
  */
 struct editorConfig {
+  int cx, cy;
   int screencols;
   int screenrows;
   struct termios orig_termios;
@@ -17,7 +20,7 @@ struct editorConfig {
   These numbers want replacing/ increasing when they
   become too low (on machines where ioctl can't do this
   for us: which seems super low).
-*/
+ */
 #define MASSIVE_WIDTH_HEIGHT "\x1b[9999C\x1b[9999B"
 #define MASSIVE_WIDTH_HEIGHT_SIZE 14
 
@@ -29,7 +32,7 @@ struct editorConfig {
 
   This will avoid flickering and stuff between write() calls on
   slow terminals/ conenctions.
-*/
+ */
 
 struct abuf {
   char *b;
@@ -37,3 +40,18 @@ struct abuf {
 };
 
 #define ABUF_INIT {NULL, 0}
+
+/*
+  Do some arrow key stuff I guess I dunno
+ */
+enum editorKey {
+  ARROW_LEFT = 1000,
+  ARROW_RIGHT,
+  ARROW_UP,
+  ARROW_DOWN,
+  DEL_KEY,
+  HOME_KEY,
+  END_KEY,
+  PAGE_UP,
+  PAGE_DOWN
+};
