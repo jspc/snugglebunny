@@ -1,15 +1,35 @@
 #define KILO_VERSION "0.0.1"
+#define KILO_TAB_STOP 8
 
 #define E_ERROR 1
 #define CTRL_KEY(k) ((k) & 0x1f)
+
+
+/*
+   Represent a row of stuff
+ */
+typedef struct erow {
+  int size;
+  int rsize;
+  char *chars;
+  char *render;
+} erow;
 
 /*
   Hold some editor state
  */
 struct editorConfig {
   int cx, cy;
+  int rx;
+  int rowoff;
+  int coloff;
   int screencols;
   int screenrows;
+  int numrows;
+  erow *row;
+  char *filename;
+  char statusmsg[80];
+  time_t statusmsg_time;
   struct termios orig_termios;
 };
 
