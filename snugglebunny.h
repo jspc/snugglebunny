@@ -28,6 +28,7 @@ typedef struct erow {
 /*
   Hold some editor state
  */
+#include <time.h>
 struct editorConfig {
   int cx, cy;
   int rx;
