@@ -41,7 +41,7 @@
 #include "buffer.h"
 #include "keys.h"
 #include "errors.h"
-#include "syntax.h"
+#include "highlight.h"
 #include "term.h"
 #include "snugglebunny.h"
 
@@ -236,6 +236,32 @@ void editorSelectSyntaxHighlight() {
 
       i++;
     }
+  }
+}
+
+int editorSyntaxToColor(int hl) {
+  switch (hl) {
+  case HL_NUMBER:
+    return 31;
+
+  case HL_KEYWORD2:
+    return 32;
+
+  case HL_KEYWORD1:
+    return 33;
+
+  case HL_MATCH:
+    return 34;
+
+  case HL_STRING:
+    return 35;
+
+  case HL_MLCOMMENT:
+  case HL_COMMENT:
+    return 36;
+
+  default:
+    return 37;
   }
 }
 
