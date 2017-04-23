@@ -1,22 +1,22 @@
 package main
 
 import (
-    "path"
+	"path"
 )
 
-type buffer struct{
-    filename string
-    filepath string
-    suffix string
-    dirty bool
+type buffer struct {
+	filename string
+	filepath string
+	suffix   string
+	dirty    bool
 
-    contents []string
+	contents []string
 }
 
 func NewBuffer(filepath string) buffer {
-    return buffer{
-        filename: path.Base(filepath),
-        filepath: filepath,
-        suffix: path.Ext(filepath),
-    }
+	return buffer{
+		filename: path.Base(filepath),
+		filepath: filepath,
+		suffix:   path.Ext(filepath),
+	}
 }

@@ -1,23 +1,39 @@
 package main
 
 import (
-    "bufio"
-    "os"
+	"os"
 
-    _"golang.org/x/crypto/ssh/terminal"
+	"golang.org/x/crypto/ssh/terminal"
+)
+
+var (
+	oldState *terminal.State
+	err      error
 )
 
 func main() {
-    b := NewBuffer("~/go/src/github.com/jspc/snugglebunny/buffer.go")
-    e := NewEditor()
-    e.buffers = append(e.buffers, b)
+	b := NewBuffer("~/go/src/github.com/jspc/snugglebunny/buffer.go")
+	e := NewEditor()
+	e.buffers = append(e.buffers, b)
 
-    // oldState, err := terminal.MakeRaw(0)
-    // if err != nil {
-    //     panic(err)
-    // }
-    // defer terminal.Restore(0, oldState)
+	rawMode()
+	defer endRawMode()
 
-    e.draw()
-    bufio.NewReader(os.Stdin).ReadBytes('\n')
+	var keybuf [1]byte
+	for {
+		e.draw()
+		_, _ = os.Stdin.Read(keybuf[0:1])
+		editorMessage = string(keybuf[0])
+	}
+}
+
+func rawMode() {
+	oldState, err = terminal.MakeRaw(1)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func endRawMode() {
+	terminal.Restore(1, oldState)
 }
