@@ -1,14 +1,17 @@
 package main
 
 import (
-	"os"
-
 	"golang.org/x/crypto/ssh/terminal"
 )
 
 var (
 	oldState *terminal.State
 	err      error
+)
+
+const (
+	exit = iota
+	cont
 )
 
 func main() {
@@ -19,11 +22,11 @@ func main() {
 	rawMode()
 	defer endRawMode()
 
-	var keybuf []byte = make([]byte, 1)
 	for {
 		e.draw()
-		_, _ = os.Stdin.Read(keybuf)
-		processKeyPress(keybuf)
+		if e.processKeyPress() == exit {
+			return
+		}
 	}
 }
 
