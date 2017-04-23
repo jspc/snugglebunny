@@ -15,9 +15,13 @@ const (
 )
 
 func main() {
-	b := NewBuffer("~/go/src/github.com/jspc/snugglebunny/buffer.go")
+	b := NewBuffer("/Users/jspc/golang/src/github.com/jspc/snugglebunny/buffer.go")
 	e := NewEditor()
-	e.buffers = append(e.buffers, b)
+
+	err := e.loadBuffer(b)
+	if err != nil {
+		panic(err)
+	}
 
 	rawMode()
 	defer endRawMode()
@@ -39,4 +43,5 @@ func rawMode() {
 
 func endRawMode() {
 	terminal.Restore(1, oldState)
+	print("\r\n")
 }

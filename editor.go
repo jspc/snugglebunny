@@ -11,15 +11,27 @@ var (
 
 type editor struct {
 	window  window
-	buffers []buffer
+	buffers []*buffer
 	bIndex  int
 }
 
 func NewEditor() editor {
 	return editor{
 		window:  NewWindow(),
-		buffers: []buffer{},
+		buffers: []*buffer{},
 	}
+}
+
+func (e *editor) loadBuffer(b *buffer) (err error) {
+	err = b.load()
+	if err != nil {
+		return
+	}
+
+	e.buffers = append(e.buffers, b)
+	e.bIndex = len(e.buffers) - 1
+
+	return
 }
 
 func (e editor) draw() {
@@ -29,13 +41,18 @@ func (e editor) draw() {
 
 	lines := make([]string, e.window.rows)
 	lines[0] = e.window.titleBar()
-	lines[len(lines)-3] = e.window.fileBar(buffer.filename, buffer.suffix, buffer.dirty, 0, len(buffer.contents))
-	lines[len(lines)-2] = e.window.messageBar()
+
+	for idx, line := range e.window.editorPane(buffer.contents, buffer.contentsPosition) {
+		lines[idx+1] = line
+	}
+
+	lines[len(lines)-2] = e.window.fileBar(buffer.filename, buffer.suffix, buffer.dirty, 0, len(buffer.contents))
+	lines[len(lines)-1] = e.window.messageBar()
 
 	for idx, l := range lines {
 		fmt.Print(l)
-		if idx < (e.window.rows - 3) {
-			fmt.Print("\n")
+		if idx < (e.window.rows - 2) {
+			fmt.Print("\n\r")
 		}
 	}
 }

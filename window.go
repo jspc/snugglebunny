@@ -29,6 +29,19 @@ func NewWindow() window {
 	}
 }
 
+func (w window) editorPane(contents []string, start int) (s []string) {
+	s = make([]string, w.rows-3)
+
+	for i := 0; i < w.rows-3; i++ {
+		if (i + start) < len(contents) {
+			s[i] = contents[i+start]
+		} else {
+			s[i] = ""
+		}
+	}
+	return
+}
+
 func (w window) titleBar() string {
 	b := make([]byte, w.cols)
 
