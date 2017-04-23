@@ -19,11 +19,11 @@ func main() {
 	rawMode()
 	defer endRawMode()
 
-	var keybuf [1]byte
+	var keybuf []byte = make([]byte, 1)
 	for {
 		e.draw()
-		_, _ = os.Stdin.Read(keybuf[0:1])
-		editorMessage = string(keybuf[0])
+		_, _ = os.Stdin.Read(keybuf)
+		processKeyPress(keybuf)
 	}
 }
 
