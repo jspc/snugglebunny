@@ -46,7 +46,7 @@ func (e editor) draw() {
 		lines[idx+1] = line
 	}
 
-	lines[len(lines)-2] = e.window.fileBar(buffer.filename, buffer.suffix, buffer.dirty, 0, len(buffer.contents))
+	lines[len(lines)-2] = e.window.fileBar(buffer.filename, buffer.suffix, buffer.dirty, 0, len(buffer.contents), e.bIndex)
 	lines[len(lines)-1] = e.window.messageBar()
 
 	for idx, l := range lines {

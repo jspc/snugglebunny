@@ -27,6 +27,10 @@ func NewBuffer(filepath string) *buffer {
 }
 
 func (b *buffer) load() (err error) {
+	if b.filepath == "" {
+		return
+	}
+
 	var f *os.File
 	var part []byte
 	var prefix bool

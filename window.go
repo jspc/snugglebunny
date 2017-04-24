@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/fatih/color"
@@ -58,7 +59,7 @@ func (w window) titleBar() string {
 	return bar.Sprintf(string(b))
 }
 
-func (w window) fileBar(filename, suffix string, dirty bool, bPos, bLen int) string {
+func (w window) fileBar(filename, suffix string, dirty bool, bPos, bLen, bIndex int) string {
 	b := make([]byte, w.cols)
 
 	bar := color.New(color.Reset).Add(color.FgHiBlack).Add(color.BgHiWhite)
@@ -76,6 +77,11 @@ func (w window) fileBar(filename, suffix string, dirty bool, bPos, bLen int) str
 	suffixStatus := []byte("[" + suffix + "]")
 	for idx, c := range suffixStatus {
 		b[w.cols-len(suffixStatus)+idx] = c
+	}
+
+	bufferStatus := []byte(fmt.Sprintf("buffer: %d | loc: %d", bIndex, bLen))
+	for idx, c := range bufferStatus {
+		b[w.cols-len(suffixStatus)-len(bufferStatus)-2+idx] = c
 	}
 
 	b = cleanStringNil(b)

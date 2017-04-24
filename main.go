@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"golang.org/x/crypto/ssh/terminal"
 )
 
@@ -15,12 +17,19 @@ const (
 )
 
 func main() {
-	b := NewBuffer("/Users/jspc/golang/src/github.com/jspc/snugglebunny/buffer.go")
 	e := NewEditor()
 
-	err := e.loadBuffer(b)
-	if err != nil {
-		panic(err)
+	if len(os.Args) > 1 {
+		for _, p := range os.Args[1:] {
+			b := NewBuffer(p)
+
+			err := e.loadBuffer(b)
+			if err != nil {
+				panic(err)
+			}
+		}
+	} else {
+		e.loadBuffer(&buffer{})
 	}
 
 	rawMode()
